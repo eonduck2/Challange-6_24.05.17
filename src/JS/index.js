@@ -66,7 +66,6 @@ function checkPassword() {
     typeof password_name == `string` &&
     !isNaN(Number(password_number))
   ) {
-    console.log($first_password, password_name, password_number);
     inputs[2].focus();
     inputs[1].style.border = `solid 3px ${greenColorCode}`;
     validationCheck[1] = true;
@@ -142,9 +141,8 @@ function checkPhone() {
         validationCheckCount--;
       }
       if (validationCheckCount <= 5) {
-        console.log(`asd`);
         $input_form.submit();
-        location.href = `./src/HTML/parsedFormData.html`;
+        // location.href = `./src/HTML/parsedFormData.html`;
       }
     });
   } else {

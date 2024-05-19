@@ -13,14 +13,6 @@ const readFiles = (req, res, path, contentType) => {
       res.writeHead(200, { "Content-Type": contentType });
       res.end(data);
     }
-
-    if (req.method == `GET`) {
-      console.log(
-        req.on(`data`, (data) => {
-          console.log(data);
-        })
-      );
-    }
   });
 };
 
@@ -52,6 +44,42 @@ http
       readFiles(req, res, path, `image/jpeg`);
     } else if (fileExtension === `webp`) {
       readFiles(req, res, path, `image/webp`);
+    } else if (url.startsWith(`/test`)) {
+      if (req.method == `GET`) {
+        const inputData = url.split("?")[1];
+        const data = qs.decode(inputData);
+        console.log(data);
+        console.log(data["name-id"]);
+        // console.log(Object.entries(data));
+        let body;
+
+        req.on("data", (chunk) => {
+          console.log(12313);
+          console.log(`test` + chunk);
+          body += chunk;
+        });
+        req.on("end", () => {
+          res.writeHead(500, { "Content-Type": "text/plain" });
+          res.end(body);
+        });
+      }
+
+      if (req.method == `POST`) {
+        console.log(req);
+        // const inputData = url.split("?")[1];
+        // const data = qs.decode(inputData);
+        // console.log(data);
+        let body;
+
+        req.on("data", (chunk) => {
+          console.log(chunk);
+          body += chunk;
+        });
+        req.on("end", () => {
+          res.writeHead(500, { "Content-Type": "text/plain" });
+          res.end(body);
+        });
+      }
     }
   })
   .listen(port, () => {
